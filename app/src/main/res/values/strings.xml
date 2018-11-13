@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Assignment_2</string>
+    <string name="find_child">Find Child</string>
+    <string name="add_child">Add Child</string>
+    <string name="search_hint" />
+    <string name="hint_firstName">First Name</string>
+    <string name="hint_lastName">Last Name</string>
+    <string name="hint_bdate">Date of Birth</string>
+    <string name="hint_street">Street</string>
+    <string name="hint_city">City</string>
+    <string name="hint_province">Province</string>
+    <string name="hint_postalCode">Postal Code</string>
+    <string name="hint_country">Country</string>
+    <string name="hint_lat">Latitude</string>
+    <string name="hint_lng">Longitude</string>
+    <string name="hint_isNaughty">Naughty?</string>
+    <string name="input_submit">Submit</string>
+    <string name="input_cancel">Cancel</string>
+</resources>
