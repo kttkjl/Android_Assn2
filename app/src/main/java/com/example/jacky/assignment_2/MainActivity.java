@@ -237,5 +237,4 @@ public class MainActivity extends AppCompatActivity {
         lv_list_children.setAdapter(children_list_adapter);
         children_list_adapter.notifyDataSetChanged();
     }
-
 }
