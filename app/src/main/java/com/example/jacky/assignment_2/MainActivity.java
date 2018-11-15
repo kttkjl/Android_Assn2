@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     ChildrenItemAdapter children_list_adapter;
 
     public ArrayList<Child> getChildren() {
+        // Create SQLite Database
         SQLiteOpenHelper helper = new ChildrenDbHelper(this);
         ArrayList<Child> children = new ArrayList<Child>();
         try {
@@ -195,6 +196,38 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public ArrayList<Child> findNaughtyChildren(boolean isNaughty) {
+        // Use temp arrayList here
+        ArrayList<Child> temp_children = new ArrayList<Child>();
+        String where;
+        String[] whereArgs;
+        try {
+            if (isNaughty) {
+                // If finding naughty children
+                where = "ISNAUGHTY=?";
+                whereArgs = new String[]{"1"};
+            } else {
+                // If finding nice children
+                where = "ISNAUGHTY=?";
+                whereArgs = new String[]{"0"};
+            }
+            cursor = db.query("CHILDREN", null, where, whereArgs, null, null, "FNAME");
+            // Loop
+            if (cursor.moveToFirst()) {
+                do {
+                    temp_children.add(createChildWithCursor(cursor));
+                    System.out.println("temp_child add, size: " + temp_children.size());
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteException sqlex){
+            String msg = "[MainActivity / findChildByName] DB unavailable";
+            msg += "\n\n" + sqlex.toString();
+            Toast t = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+            t.show();
+        }
+        return temp_children;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // TODO Auto-generated method stub
@@ -203,6 +236,23 @@ public class MainActivity extends AppCompatActivity {
             {
                 Intent intent = new Intent(MainActivity.this, ChildActivity.class);
                 startActivity(intent);
+                break;
+            }
+            case R.id.overflow_view_naughty:
+            {
+                ArrayList<Child> resultList = findNaughtyChildren(true);
+                updateListView(resultList);
+                break;
+            }
+            case R.id.overflow_view_nice:
+            {
+                ArrayList<Child> resultList = findNaughtyChildren(false);
+                updateListView(resultList);
+                break;
+            }
+            case R.id.overflow_view_all:
+            {
+                updateListView(children);
             }
         }
         return super.onOptionsItemSelected(item);
