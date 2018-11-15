@@ -1,5 +1,8 @@
 package com.example.jacky.assignment_2;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -9,7 +12,10 @@ import android.widget.TextView;
 
 public class ChildActivity extends AppCompatActivity {
 
+    private SQLiteDatabase db;
+    private Cursor cursor;
     private Child child;
+    SQLiteOpenHelper helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +40,18 @@ public class ChildActivity extends AppCompatActivity {
     }
 
     private void populateFields(Child child) {
+        helper = new ChildrenDbHelper(this);
+        db = helper.getWritableDatabase();
+
+        String where = "_id=?";
+        String[] whereArgs = new String[] {String.valueOf(child.getId())};
+        cursor = db.query("CHILDREN", null, where, whereArgs, null, null, "FNAME");
+        cursor.moveToFirst();
+        String date_created = cursor.getString(12);
+
+        TextView text_id = findViewById(R.id.input_id);
+        text_id.setText("ID: " + Long.toString(child.getId()));
+
         TextView text_name = findViewById(R.id.input_fname);
         text_name.setText(child.getFname() + " " + child.getLname());
 
@@ -65,6 +83,8 @@ public class ChildActivity extends AppCompatActivity {
         TextView text_lng = findViewById(R.id.input_lng);
         text_lng.setText("Longitude: " + Float.toString(child.getLng()));
 
+        TextView text_created = findViewById(R.id.input_created);
+        text_created.setText("Date Created: " + date_created);
     }
 
 }

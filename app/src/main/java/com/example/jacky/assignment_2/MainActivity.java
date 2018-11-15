@@ -166,8 +166,8 @@ public class MainActivity extends AppCompatActivity {
         // For full control
         SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_item_find_child).getActionView();
-        int options = searchView.getImeOptions();
-        searchView.setImeOptions(options|EditorInfo.IME_FLAG_NO_EXTRACT_UI);
+//        int options = searchView.getImeOptions();
+//        searchView.setImeOptions(options|EditorInfo.IME_FLAG_NO_EXTRACT_UI);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -254,6 +254,7 @@ public class MainActivity extends AppCompatActivity {
             }
             case R.id.overflow_view_all:
             {
+                this.children = getChildren();
                 updateListView(children);
             }
         }

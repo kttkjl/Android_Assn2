@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Assignment_2</string>
+    <string name="app_name">Li_Alvar</string>
     <string name="find_child">Find Child</string>
     <string name="add_child">Add Child</string>
     <string name="search_hint" />
@@ -22,4 +22,5 @@
     <string name="clear_list">Clear List</string>
     <string name="edit_child">Edit Child</string>
     <string name="delete_child">Delete Child</string>
+    <string name="text_credits"><![CDATA[Created By: Jacky Li & Viktor Alvar]]></string>
 </resources>
