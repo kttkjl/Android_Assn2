@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -66,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return children;
     }
-
 
     public ArrayList<Child> findChildByName(String name) {
         // Use temp arrayList here
@@ -166,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
         // For full control
         SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_item_find_child).getActionView();
+        int options = searchView.getImeOptions();
+        searchView.setImeOptions(options|EditorInfo.IME_FLAG_NO_EXTRACT_UI);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -220,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                 } while (cursor.moveToNext());
             }
         } catch (SQLiteException sqlex){
-            String msg = "[MainActivity / findChildByName] DB unavailable";
+            String msg = "[MainActivity / findNaughtyChildren] DB unavailable";
             msg += "\n\n" + sqlex.toString();
             Toast t = Toast.makeText(this, msg, Toast.LENGTH_LONG);
             t.show();
@@ -234,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.menu_item_add_child:
             {
-                Intent intent = new Intent(MainActivity.this, ChildActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddChildActivity.class);
                 startActivity(intent);
                 break;
             }
@@ -282,6 +284,7 @@ public class MainActivity extends AppCompatActivity {
      * @param children - array of Child objects to be displayed
      */
     protected void updateListView(ArrayList<Child> children) {
+        this.children = children;
         children_list_adapter.clear();
         children_list_adapter.addAll(children);
         lv_list_children.setAdapter(children_list_adapter);

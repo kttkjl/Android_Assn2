@@ -20,7 +20,8 @@
                 android:name="android.app.default_searchable"
                 android:value=".SearchResultActivity" />
         </activity>
-        <activity android:name=".ChildActivity"></activity>
+        <activity android:name=".ChildActivity" />
+        <activity android:name=".AddChildActivity"></activity>
     </application>
 
 </manifest>

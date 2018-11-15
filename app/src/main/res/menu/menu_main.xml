@@ -26,14 +26,12 @@
             android:orderInCategory="3"
             app:showAsAction="never"
             />
-
         <item
             android:id="@+id/overflow_view_nice"
             android:title="@string/view_nice"
             android:orderInCategory="3"
             app:showAsAction="never"
             />
-
         <item
             android:id="@+id/overflow_view_all"
             android:title="@string/view_all"

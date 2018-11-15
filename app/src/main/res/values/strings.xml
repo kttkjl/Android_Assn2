@@ -19,4 +19,7 @@
     <string name="view_naughty">View Naughty</string>
     <string name="view_nice">View Nice</string>
     <string name="view_all">View All</string>
+    <string name="clear_list">Clear List</string>
+    <string name="edit_child">Edit Child</string>
+    <string name="delete_child">Delete Child</string>
 </resources>
