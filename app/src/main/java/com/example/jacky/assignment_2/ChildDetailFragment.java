@@ -1,22 +1,27 @@
 package com.example.jacky.assignment_2;
 
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ChildDetailFragment extends Fragment {
+public class ChildDetailFragment extends Fragment implements View.OnClickListener {
 
     private SQLiteDatabase db;
     private Cursor cursor;
@@ -38,8 +43,14 @@ public class ChildDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_child_detail, container, false);
+        // Get Reference to Update and Delete Buttons
+        Button updateBtn = (Button) v.findViewById(R.id.btn_update);
+        updateBtn.setOnClickListener(this);
+        Button deleteBtn = (Button) v.findViewById(R.id.btn_delete);
+        deleteBtn.setOnClickListener(this);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_child_detail, container, false);
+        return v;
     }
 
     @Override
@@ -113,5 +124,62 @@ public class ChildDetailFragment extends Fragment {
     public void setChild(Child child) {
         this.child = child;
     }
+
+    @Override
+    public void onResume() {
+        String where = "_id=?";
+        String[] whereArgs = new String[] {String.valueOf(child.getId())};
+        cursor = db.query("CHILDREN", null, where, whereArgs, null, null, "FNAME");
+        cursor.moveToFirst();
+        // Boolean handling
+        boolean isNaughty = cursor.getInt(11) == 1;
+        this.child = new Child (
+                cursor.getInt(0),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getString(3),
+                cursor.getString(4),
+                cursor.getString(5),
+                cursor.getString(6),
+                cursor.getString(7),
+                cursor.getString(8),
+                cursor.getFloat(9),
+                cursor.getFloat(10),
+                isNaughty);
+        populateFields(child, getView());
+        super.onResume();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.btn_update:
+            {
+                Intent intent = new Intent(getActivity(), AddChildActivity.class);
+                intent.putExtra("child", child);
+                startActivity(intent);
+                break;
+            }
+            case R.id.btn_delete:
+            {
+                // Remove Child Row
+                deleteChild(db, child);
+                // Clear Detail Fragment Container
+                for (Fragment fragment:getFragmentManager().getFragments()) {
+                    if (fragment instanceof ListFragment) {
+                        continue;
+                    }
+                    else if (fragment!=null) {
+                        getFragmentManager().beginTransaction().remove(fragment).commit();
+                    }
+                }
+                // Update ListFragment
+                ((MainActivity) getActivity()).children = ((MainActivity) getActivity()).getChildren();
+                ((MainActivity) getActivity()).updateListView(((MainActivity) getActivity()).children);
+            }
+        }
+    }
+
+
 
 }
