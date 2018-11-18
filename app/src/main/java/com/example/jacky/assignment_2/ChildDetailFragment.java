@@ -1,6 +1,5 @@
 package com.example.jacky.assignment_2;
 
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,15 +7,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -179,7 +175,5 @@ public class ChildDetailFragment extends Fragment implements View.OnClickListene
             }
         }
     }
-
-
 
 }

@@ -17,6 +17,7 @@ public class Child implements Serializable{
     private boolean isNaughty;
     private String dateCreated;
 
+    // Seed Data of 5 Records
     public static final Child[] CHILDREN = {
         new Child("John", "Doe", "2007-10-23", "Sesame Street", "Burnaby", "British Columbia", "V5K 1B4", "Canada", (float)45.23, (float)-123.11, true)
         ,new Child("Jane", "Doe", "2008-02-22", "Corner Street", "Prince George", "British Columbia", "V2L 8U9", "Canada", (float)22.13, (float)-102.31, true)

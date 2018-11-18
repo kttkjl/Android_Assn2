@@ -144,22 +144,8 @@ public class MainActivity extends AppCompatActivity implements ChildListListener
             isTablet = true;
         }
 
-//        this.lv_list_children = findViewById(R.id.lv_list_children);
         this.children = getChildren();
 
-//        children_list_adapter = new ChildrenItemAdapter(MainActivity.this, children);
-//        lv_list_children.setAdapter(children_list_adapter);
-
-//        lv_list_children.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent intent = new Intent(MainActivity.this, ChildActivity.class);
-//                String currClicked = ((TextView) view.findViewById(R.id.children_list_item)).getText().toString();
-//                System.out.println("Clicked position: " + currClicked);
-//                intent.putExtra("child", children.get(i));
-//                startActivity(intent);
-//            }
-//        });
     }
 
     @Override
@@ -211,14 +197,6 @@ public class MainActivity extends AppCompatActivity implements ChildListListener
                 return true;
             }
         });
-
-        // For activating the search activity
-//        SearchManager searchManager =
-//                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        SearchView searchView =
-//                (SearchView) menu.findItem(R.id.menu_item_find_child).getActionView();
-//        searchView.setSearchableInfo(
-//                searchManager.getSearchableInfo(getComponentName()));
         return true;
     }
 

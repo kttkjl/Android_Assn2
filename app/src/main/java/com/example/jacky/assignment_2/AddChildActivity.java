@@ -44,10 +44,6 @@ public class AddChildActivity extends AppCompatActivity {
         }
     }
 
-    private boolean updateChild(){
-        return true;
-    }
-
     public void onClickCancel(View v) {
         finish();
     }
