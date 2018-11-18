@@ -23,4 +23,9 @@
     <string name="edit_child">Edit Child</string>
     <string name="delete_child">Delete Child</string>
     <string name="text_credits"><![CDATA[Created By: Jacky Li & Viktor Alvar]]></string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_update">Update</string>
+    <string name="btn_delete">Delete</string>
 </resources>

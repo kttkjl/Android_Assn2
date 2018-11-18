@@ -17,9 +17,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <ListView
-        android:id="@+id/lv_list_children"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+    <fragment
+        android:name="com.example.jacky.assignment_2.ChildListFragment"
+        android:id="@+id/list_frag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!--<ListView-->
+        <!--android:id="@+id/lv_list_children"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content" />-->
 
 </LinearLayout>

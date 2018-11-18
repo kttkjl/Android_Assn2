@@ -10,7 +10,7 @@
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/menu_item_find_child"
+        android:id="@+id/menu_item_delete_child"
         android:title="@string/delete_child"
         android:icon="@drawable/baseline_delete_white_18dp"
         android:orderInCategory="2"

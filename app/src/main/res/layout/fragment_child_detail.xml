@@ -3,125 +3,118 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".AddChildActivity"
+    tools:context=".ChildActivity"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".AddChildActivity">
+        android:orientation="vertical">
 
-        <include
-            android:id="@+id/appbar_id"
-            layout="@layout/app_bar" />
-
-        <EditText
+        <TextView
             android:id="@+id/input_fname"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:inputType="text"
-            android:hint="@string/hint_firstName"
-            android:imeOptions="flagNoExtractUi"
+            android:layout_marginTop="25sp"
+            android:textAlignment="center"
+            android:textSize="32sp"
+            android:textStyle="bold"
             />
-        <EditText
-            android:id="@+id/input_lname"
+        <TextView
+            android:id="@+id/input_isNaughty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25sp"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:id="@+id/input_id"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:inputType="text"
-            android:hint="@string/hint_lastName"
-            android:imeOptions="flagNoExtractUi"
+            android:layout_marginStart="40sp"
+            android:layout_marginBottom="5sp"
             />
-        <EditText
+        <TextView
             android:id="@+id/input_bdate"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:inputType="text"
-            android:hint="@string/hint_bdate"
-            android:imeOptions="flagNoExtractUi"
+            android:layout_marginStart="40sp"
+            android:layout_marginBottom="5sp"
             />
-        <EditText
+        <TextView
             android:id="@+id/input_street"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:inputType="text"
-            android:hint="@string/hint_street"
-            android:imeOptions="flagNoExtractUi"
+            android:layout_marginStart="40sp"
+            android:layout_marginBottom="5sp"
             />
-        <EditText
+        <TextView
             android:id="@+id/input_city"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:inputType="text"
-            android:hint="@string/hint_city"
-            android:imeOptions="flagNoExtractUi"
+            android:layout_marginStart="40sp"
+            android:layout_marginBottom="5sp"
             />
-        <EditText
+        <TextView
             android:id="@+id/input_province"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:inputType="text"
-            android:hint="@string/hint_province"
-            android:imeOptions="flagNoExtractUi"
+            android:layout_marginStart="40sp"
+            android:layout_marginBottom="5sp"
             />
-        <EditText
+        <TextView
             android:id="@+id/input_postalCode"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:inputType="text"
-            android:hint="@string/hint_postalCode"
-            android:imeOptions="flagNoExtractUi"
+            android:layout_marginStart="40sp"
+            android:layout_marginBottom="5sp"
             />
-        <EditText
+        <TextView
             android:id="@+id/input_country"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:inputType="text"
-            android:hint="@string/hint_country"
-            android:imeOptions="flagNoExtractUi"
+            android:layout_marginStart="40sp"
+            android:layout_marginBottom="5sp"
             />
-        <EditText
+        <TextView
             android:id="@+id/input_lat"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:inputType="number"
-            android:hint="@string/hint_lat"
-            android:imeOptions="flagNoExtractUi"
+            android:layout_marginStart="40sp"
+            android:layout_marginBottom="5sp"
             />
-        <EditText
+        <TextView
             android:id="@+id/input_lng"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:inputType="number"
-            android:hint="@string/hint_lng"
-            android:imeOptions="flagNoExtractUi"
+            android:layout_marginStart="40sp"
+            android:layout_marginBottom="5sp"
             />
-
-        <CheckBox
-            android:id="@+id/input_isNaughty"
+        <TextView
+            android:id="@+id/input_created"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginStart="40sp"
+            android:layout_marginBottom="5sp"
+            />
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/hint_isNaughty"
-            android:checked="false" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
             >
             <Button
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/input_submit"
-                android:onClick="onClickSubmit"
+                android:text="@string/btn_update"
                 />
             <Button
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/input_cancel"
-                android:onClick="onClickCancel"/>
+                android:text="@string/btn_delete"
+                />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

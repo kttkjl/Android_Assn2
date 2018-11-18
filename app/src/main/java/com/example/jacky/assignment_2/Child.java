@@ -15,13 +15,14 @@ public class Child implements Serializable{
     private float lat;
     private float lng;
     private boolean isNaughty;
+    private String dateCreated;
 
     public static final Child[] CHILDREN = {
-        new Child("first", "person", "1111-11-11", "WhatverStreet", "city1", "prov1", "101aba", "lulcountry", (float)199.99, (float)89.11, true)
-        ,new Child("second", "person", "1111-11-11", "WhatverStreet", "city1", "prov1", "101aba", "lulcountry", (float)199.99, (float)89.11, true)
-        ,new Child("third", "person", "1111-11-11", "WhatverStreet", "city1", "prov1", "101aba", "lulcountry", (float)199.99, (float)89.11, true)
-        ,new Child("fourth", "person", "1111-11-11", "WhatverStreet", "city1", "prov1", "101aba", "lulcountry", (float)199.99, (float)89.11, false)
-        ,new Child("fifth", "person", "1111-11-11", "WhatverStreet", "city1", "prov1", "101aba", "lulcountry", (float)199.99, (float)89.11, false)
+        new Child("John", "Doe", "2007-10-23", "Sesame Street", "Burnaby", "British Columbia", "V5K 1B4", "Canada", (float)45.23, (float)-123.11, true)
+        ,new Child("Jane", "Doe", "2008-02-22", "Corner Street", "Prince George", "British Columbia", "V2L 8U9", "Canada", (float)22.13, (float)-102.31, true)
+        ,new Child("Billy", "Bob", "2010-11-23", "West Street", "Surrey", "British Columbia", "V5T 9L1", "Canada", (float)-23.68, (float)-38.91, true)
+        ,new Child("Rachel", "Bob", "2008-01-17", "West Street", "Surrey", "British Columbia", "V5T 9L1", "Canada", (float)199.99, (float)89.11, false)
+        ,new Child("Michael", "Point", "2004-05-01", "Winter Street", "Langley", "British Columbia", "V7E 3F5", "Canada", (float)-89.73, (float)101.12, false)
     };
 
     public Child(String fname,
@@ -149,4 +150,7 @@ public class Child implements Serializable{
     public boolean isNaughty(){
         return this.isNaughty;
     }
+
+    public void setDateCreated(String dateCreated) { this.dateCreated = dateCreated; }
+    public String getDateCreated() { return this.dateCreated; }
 }

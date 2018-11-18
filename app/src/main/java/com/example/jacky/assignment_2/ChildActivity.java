@@ -1,5 +1,6 @@
 package com.example.jacky.assignment_2;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 public class ChildActivity extends AppCompatActivity {
@@ -31,12 +33,63 @@ public class ChildActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        String where = "_id=?";
+        String[] whereArgs = new String[] {String.valueOf(child.getId())};
+        cursor = db.query("CHILDREN", null, where, whereArgs, null, null, "FNAME");
+        cursor.moveToFirst();
+        // Boolean handling
+        boolean isNaughty = cursor.getInt(11) == 1;
+        this.child = new Child (
+                cursor.getInt(0),
+                cursor.getString(1),
+                cursor.getString(2),
+                cursor.getString(3),
+                cursor.getString(4),
+                cursor.getString(5),
+                cursor.getString(6),
+                cursor.getString(7),
+                cursor.getString(8),
+                cursor.getFloat(9),
+                cursor.getFloat(10),
+                isNaughty);
+        populateFields(child);
+        super.onResume();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_child_detail, menu);
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // TODO Auto-generated method stub
+        switch(item.getItemId()){
+            case R.id.menu_item_edit_child:
+            {
+                Intent intent = new Intent(ChildActivity.this, AddChildActivity.class);
+                intent.putExtra("child", child);
+                startActivity(intent);
+                break;
+            }
+            case R.id.menu_item_delete_child:
+            {
+                deleteChild(db, child);
+                finish();
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteChild(SQLiteDatabase db, Child child) {
+        String where = "_id=?";
+        String[] whereArgs = new String[] {String.valueOf(child.getId())};
+        db.delete("CHILDREN", where, whereArgs);
     }
 
     private void populateFields(Child child) {

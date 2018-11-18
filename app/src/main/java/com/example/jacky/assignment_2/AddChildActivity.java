@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -23,6 +24,9 @@ public class AddChildActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_child);
 
+        Toolbar toolbar = findViewById(R.id.appbar_id);
+        setSupportActionBar(toolbar);
+
         // Create the DB helper
         helper = new ChildrenDbHelper(this);
         db = helper.getWritableDatabase();
@@ -30,10 +34,12 @@ public class AddChildActivity extends AppCompatActivity {
         child = (Child)getIntent().getSerializableExtra("child");
         // If provided child object - populate
         if(child != null) {
+            getSupportActionBar().setTitle("Update Child");
             mode = 1;
             // Populate the fields
             populateFields(child);
         } else {
+            getSupportActionBar().setTitle("Create Child");
             mode = 0;
         }
     }
