@@ -10,9 +10,22 @@
         android:id="@+id/appbar_id"
         layout="@layout/app_bar" />
 
-    <ListView
-        android:id="@+id/lv_list_children"
-        android:layout_width="fill_parent"
+    <TextView
+        android:id="@+id/text_credits"
+        android:text="@string/text_credits"
+        android:textAlignment="center"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <fragment
+        android:name="com.example.jacky.assignment_2.ChildListFragment"
+        android:id="@+id/list_frag"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!--<ListView-->
+        <!--android:id="@+id/lv_list_children"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content" />-->
 
 </LinearLayout>

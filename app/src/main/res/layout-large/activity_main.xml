@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <include
+            android:id="@+id/appbar_id"
+            layout="@layout/app_bar" />
+
+        <TextView
+            android:id="@+id/text_credits"
+            android:text="@string/text_credits"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <fragment
+            android:name="com.example.jacky.assignment_2.ChildListFragment"
+            android:id="@+id/list_frag"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent" />
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <!--<ListView-->
+    <!--android:id="@+id/lv_list_children"-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="wrap_content" />-->
+
+</LinearLayout>

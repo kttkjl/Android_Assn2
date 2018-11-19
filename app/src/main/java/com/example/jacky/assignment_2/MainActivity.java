@@ -7,8 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.inputmethod.EditorInfo;
 import android.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -22,16 +24,17 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ChildListListener{
 
     private SQLiteDatabase db;
     private Cursor cursor;
     private ListView lv_list_children;
-    private ArrayList<Child> children;
 
-    ChildrenItemAdapter children_list_adapter;
+    public boolean isTablet;
+    public ArrayList<Child> children;
 
     public ArrayList<Child> getChildren() {
+        // Create SQLite Database
         SQLiteOpenHelper helper = new ChildrenDbHelper(this);
         ArrayList<Child> children = new ArrayList<Child>();
         try {
@@ -66,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
         return children;
     }
 
-
     public ArrayList<Child> findChildByName(String name) {
         // Use temp arrayList here
         ArrayList<Child> temp_children = new ArrayList<Child>();
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case 2:
                     // If they gave full name
-                    where = "FNAME=? OR LNAME=?";
+                    where = "FNAME=? AND LNAME=?";
                     whereArgs = new String[] {queryString[0], queryString[1]};
                     break;
                 default:
@@ -114,18 +116,18 @@ public class MainActivity extends AppCompatActivity {
         // Boolean handling
         boolean isNaughty = c.getInt(11) == 1;
         return new Child (
-            c.getInt(0),
-            c.getString(1),
-            c.getString(2),
-            c.getString(3),
-            cursor.getString(4),
-            cursor.getString(5),
-            cursor.getString(6),
-            cursor.getString(7),
-            cursor.getString(8),
-            cursor.getFloat(9),
-            cursor.getFloat(10),
-            isNaughty);
+                c.getInt(0),
+                c.getString(1),
+                c.getString(2),
+                c.getString(3),
+                cursor.getString(4),
+                cursor.getString(5),
+                cursor.getString(6),
+                cursor.getString(7),
+                cursor.getString(8),
+                cursor.getFloat(9),
+                cursor.getFloat(10),
+                isNaughty);
     }
 
     @Override
@@ -136,28 +138,36 @@ public class MainActivity extends AppCompatActivity {
         // Add toolbar to this
         Toolbar toolbar = findViewById(R.id.appbar_id);
         setSupportActionBar(toolbar);
-        // Add buttons to said toolbar
-        this.lv_list_children = findViewById(R.id.lv_list_children);
+
+        View fragmentContainer = findViewById(R.id.fragment_container);
+        if (fragmentContainer != null) {
+            isTablet = true;
+        }
+
         this.children = getChildren();
-
-        children_list_adapter = new ChildrenItemAdapter(MainActivity.this, children);
-        lv_list_children.setAdapter(children_list_adapter);
-
-        lv_list_children.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(MainActivity.this, ChildActivity.class);
-                String currClicked = ((TextView) view.findViewById(R.id.children_list_item)).getText().toString();
-                System.out.println("Clicked position: " + currClicked);
-                intent.putExtra("child", children.get(i));
-                startActivity(intent);
-            }
-        });
 
     }
 
     @Override
+    public void itemClicked(Child child) {
+        if (isTablet) {
+            ChildDetailFragment details = new ChildDetailFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            details.setChild(child);
+            ft.replace(R.id.fragment_container, details);
+            ft.addToBackStack(null);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.commit();
+        } else {
+            Intent intent = new Intent(MainActivity.this, ChildActivity.class);
+            intent.putExtra("child", child);
+            startActivity(intent);
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Add buttons to said toolbar
         // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
@@ -165,6 +175,8 @@ public class MainActivity extends AppCompatActivity {
         // For full control
         SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_item_find_child).getActionView();
+        int options = searchView.getImeOptions();
+        searchView.setImeOptions(options|EditorInfo.IME_FLAG_NO_EXTRACT_UI);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -179,20 +191,45 @@ public class MainActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String query) {
                 // Grab the cached version if they cancel
                 if (query.isEmpty()) {
+                    children = getChildren();
                     updateListView(children);
                 }
                 return true;
             }
         });
-
-        // For activating the search activity
-//        SearchManager searchManager =
-//                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        SearchView searchView =
-//                (SearchView) menu.findItem(R.id.menu_item_find_child).getActionView();
-//        searchView.setSearchableInfo(
-//                searchManager.getSearchableInfo(getComponentName()));
         return true;
+    }
+
+    public ArrayList<Child> findNaughtyChildren(boolean isNaughty) {
+        // Use temp arrayList here
+        ArrayList<Child> temp_children = new ArrayList<Child>();
+        String where;
+        String[] whereArgs;
+        try {
+            if (isNaughty) {
+                // If finding naughty children
+                where = "ISNAUGHTY=?";
+                whereArgs = new String[]{"1"};
+            } else {
+                // If finding nice children
+                where = "ISNAUGHTY=?";
+                whereArgs = new String[]{"0"};
+            }
+            cursor = db.query("CHILDREN", null, where, whereArgs, null, null, "FNAME");
+            // Loop
+            if (cursor.moveToFirst()) {
+                do {
+                    temp_children.add(createChildWithCursor(cursor));
+                    System.out.println("temp_child add, size: " + temp_children.size());
+                } while (cursor.moveToNext());
+            }
+        } catch (SQLiteException sqlex){
+            String msg = "[MainActivity / findNaughtyChildren] DB unavailable";
+            msg += "\n\n" + sqlex.toString();
+            Toast t = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+            t.show();
+        }
+        return temp_children;
     }
 
     @Override
@@ -201,8 +238,26 @@ public class MainActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.menu_item_add_child:
             {
-                Intent intent = new Intent(MainActivity.this, ChildActivity.class);
+                Intent intent = new Intent(MainActivity.this, AddChildActivity.class);
                 startActivity(intent);
+                break;
+            }
+            case R.id.overflow_view_naughty:
+            {
+                ArrayList<Child> resultList = findNaughtyChildren(true);
+                updateListView(resultList);
+                break;
+            }
+            case R.id.overflow_view_nice:
+            {
+                ArrayList<Child> resultList = findNaughtyChildren(false);
+                updateListView(resultList);
+                break;
+            }
+            case R.id.overflow_view_all:
+            {
+                this.children = getChildren();
+                updateListView(children);
             }
         }
         return super.onOptionsItemSelected(item);
@@ -232,10 +287,9 @@ public class MainActivity extends AppCompatActivity {
      * @param children - array of Child objects to be displayed
      */
     protected void updateListView(ArrayList<Child> children) {
-        children_list_adapter.clear();
-        children_list_adapter.addAll(children);
-        lv_list_children.setAdapter(children_list_adapter);
-        children_list_adapter.notifyDataSetChanged();
+        this.children = children;
+        // Get ListFragment
+        ChildListFragment listFragment = (ChildListFragment) getSupportFragmentManager().findFragmentById(R.id.list_frag);
+        listFragment.updateListFragment(children);
     }
-
 }

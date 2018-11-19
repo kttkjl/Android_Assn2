@@ -2,7 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/menu_item_add_child"
+    <item
+        android:id="@+id/menu_item_add_child"
         android:title="@string/add_child"
         android:orderInCategory="1"
         android:icon="@drawable/baseline_star_rate_white_18dp"
@@ -16,5 +17,27 @@
         app:showAsAction="always"
         app:actionViewClass="android.widget.SearchView"
         />
+
+    <group>
+        <item
+            android:id="@+id/overflow_view_naughty"
+            android:title="@string/view_naughty"
+            android:icon="@drawable/outline_more_vert_white_18dp"
+            android:orderInCategory="3"
+            app:showAsAction="never"
+            />
+        <item
+            android:id="@+id/overflow_view_nice"
+            android:title="@string/view_nice"
+            android:orderInCategory="3"
+            app:showAsAction="never"
+            />
+        <item
+            android:id="@+id/overflow_view_all"
+            android:title="@string/view_all"
+            android:orderInCategory="3"
+            app:showAsAction="never"
+            />
+    </group>
 
 </menu>

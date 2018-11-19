@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Assignment_2</string>
+    <string name="app_name">Li_Alvar</string>
     <string name="find_child">Find Child</string>
     <string name="add_child">Add Child</string>
     <string name="search_hint" />
@@ -16,4 +16,16 @@
     <string name="hint_isNaughty">Naughty?</string>
     <string name="input_submit">Submit</string>
     <string name="input_cancel">Cancel</string>
+    <string name="view_naughty">View Naughty</string>
+    <string name="view_nice">View Nice</string>
+    <string name="view_all">View All</string>
+    <string name="clear_list">Clear List</string>
+    <string name="edit_child">Edit Child</string>
+    <string name="delete_child">Delete Child</string>
+    <string name="text_credits"><![CDATA[Created By: Jacky Li & Viktor Alvar]]></string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_update">Update</string>
+    <string name="btn_delete">Delete</string>
 </resources>
